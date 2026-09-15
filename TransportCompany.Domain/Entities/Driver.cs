@@ -2,11 +2,35 @@ using TransportCompany.Domain.Enums;
 
 namespace TransportCompany.Domain.Entities;
 
+/// <summary>
+/// Водитель транспортной компании
+/// </summary>
 public class Driver
-{ 
-    public int Id { get; set; }
-    public string PassportNumber { get; set; }
-    public string FullName { get; set; }
-    public int Experience { get; set; }
-    public DrivingLicence Licence { get; set; }
+{
+    /// <summary>
+    /// Идентификатор
+    /// </summary>
+    public required int Id { get; set; }
+
+    /// <summary>
+    /// Серия и номер паспорта
+    /// </summary>
+    /// <example>1234 567890</example>
+    public required string PassportNumber { get; set; }
+
+    /// <summary>
+    /// ФИО водителя
+    /// </summary>
+    /// <example>Петров Пётр Петрович</example>
+    public required string FullName { get; set; }
+
+    /// <summary>
+    /// Стаж вождения в годах
+    /// </summary>
+    public int? Experience { get; set; }
+
+    /// <summary>
+    /// Водительское удостоверение
+    /// </summary>
+    public required DrivingLicense License { get; set; }
 }

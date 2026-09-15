@@ -1,10 +1,24 @@
-using TransportCompany.Domain.Enums;
-
 namespace TransportCompany.Domain.Entities;
 
+/// <summary>
+/// Клиент транспортной компании
+/// </summary>
 public class Client
-{ 
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string Phone { get; set; } = string.Empty;
+{
+    /// <summary>
+    /// Идентификатор
+    /// </summary>
+    public required int Id { get; set; }
+
+    /// <summary>
+    /// ФИО клиента или Наименование организации
+    /// </summary>
+    /// <example>Иванов Иван Иванович</example>
+    /// <example>ООО "Рога и копыта"</example>
+    public required string Name { get; set; }
+
+    /// <summary>
+    /// Номер телефона
+    /// </summary>
+    public string? Phone { get; set; }
 }

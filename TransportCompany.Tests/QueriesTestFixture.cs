@@ -1,14 +1,56 @@
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using TransportCompany.Domain.Entities;
 using TransportCompany.Domain.Enums;
 
-namespace TransportCompany.Domain.Tests;
+namespace TransportCompany.Tests;
 
-public static class DataSeeder
+/// <summary>
+/// Тестовый набор данных для проверки запросов
+/// </summary>
+public class QueriesTestFixture
 {
-    public static List<VehicleModel> GetVehicleModels() => new()
+    /// <summary>
+    /// Список моделей транспортных средств
+    /// </summary>
+    public readonly List<VehicleModel> Models;
+
+    /// <summary>
+    /// Список клиентов
+    /// </summary>
+    public readonly List<Client> Clients;
+
+    /// <summary>
+    /// Список водителей
+    /// </summary>
+    public readonly List<Driver> Drivers;
+
+    /// <summary>
+    /// Список транспортных средств
+    /// </summary>
+    public readonly List<Vehicle> Vehicles;
+
+    /// <summary>
+    /// Список рейсов
+    /// </summary>
+    public readonly List<Trip> Trips;
+
+    /// <summary>
+    /// Инициализирует тестовые данные
+    /// </summary>
+    public QueriesTestFixture()
     {
+        Models = GetVehicleModels();
+        Clients = GetClients();
+        Drivers = GetDrivers();
+        Vehicles = GetVehicles(Models);
+        Trips = GetTrips(Vehicles, Drivers, Clients);
+    }
+
+    /// <summary>
+    /// Создаёт список моделей транспортных средств
+    /// </summary>
+    /// <returns>Список моделей</returns>
+    private static List<VehicleModel> GetVehicleModels() =>
+    [
         new VehicleModel { Id = 0, BodyType = BodyType.Sedan, BodyVolume = 82 },
         new VehicleModel { Id = 1, BodyType = BodyType.Hatchback, BodyVolume = 90 },
         new VehicleModel { Id = 2, BodyType = BodyType.Coupe, BodyVolume = 75 },
@@ -19,10 +61,14 @@ public static class DataSeeder
         new VehicleModel { Id = 7, BodyType = BodyType.Minivan, BodyVolume = 130 },
         new VehicleModel { Id = 8, BodyType = BodyType.Van, BodyVolume = 200 },
         new VehicleModel { Id = 9, BodyType = BodyType.PickupTruck, BodyVolume = 180 }
-    };
+    ];
 
-    public static List<Client> GetClients() => new()
-    {
+    /// <summary>
+    /// Создаёт список клиентов
+    /// </summary>
+    /// <returns>Список клиентов</returns>
+    private static List<Client> GetClients() =>
+    [
         new Client { Id = 0, Name = "Donald Truck", Phone = "88005553535" },
         new Client { Id = 1, Name = "Cat Dog", Phone = "89991112233" },
         new Client { Id = 2, Name = "John Smith", Phone = "89001234567" },
@@ -33,24 +79,33 @@ public static class DataSeeder
         new Client { Id = 7, Name = "Lisa Davis", Phone = "89556789012" },
         new Client { Id = 8, Name = "James Wilson", Phone = "89667890123" },
         new Client { Id = 9, Name = "Maria Garcia", Phone = "89778901234" }
-    };
+    ];
 
-    public static List<Driver> GetDrivers() => new()
-    {
-        new Driver { Id = 0, PassportNumber = "1234 567890", FullName = "John Johnson", Experience = 5, Licence = DrivingLicence.C },
-        new Driver { Id = 1, PassportNumber = "2345 678901", FullName = "Mike Tyson", Experience = 8, Licence = DrivingLicence.B },
-        new Driver { Id = 2, PassportNumber = "3456 789012", FullName = "Conor McGregor", Experience = 3, Licence = DrivingLicence.A },
-        new Driver { Id = 3, PassportNumber = "4567 890123", FullName = "Anderson Silva", Experience = 15, Licence = DrivingLicence.CE },
-        new Driver { Id = 4, PassportNumber = "5678 901234", FullName = "Georges St-Pierre", Experience = 10, Licence = DrivingLicence.D },
-        new Driver { Id = 5, PassportNumber = "6789 012345", FullName = "Jon Jones", Experience = 7, Licence = DrivingLicence.BE },
-        new Driver { Id = 6, PassportNumber = "7890 123456", FullName = "Daniel Cormier", Experience = 20, Licence = DrivingLicence.C1 },
-        new Driver { Id = 7, PassportNumber = "8901 234567", FullName = "Stipe Miocic", Experience = 6, Licence = DrivingLicence.A1 },
-        new Driver { Id = 8, PassportNumber = "9012 345678", FullName = "Israel Adesanya", Experience = 4, Licence = DrivingLicence.M },
-        new Driver { Id = 9, PassportNumber = "1111 345678", FullName = "Aaaaaa Uuuuuuuu", Experience = 1, Licence = DrivingLicence.M }
-    };
+    /// <summary>
+    /// Создаёт список водителей
+    /// </summary>
+    /// <returns>Список водителей</returns>
+    private static List<Driver> GetDrivers() =>
+    [
+        new Driver { Id = 0, PassportNumber = "1234 567890", FullName = "John Johnson", Experience = 5, License = DrivingLicense.C },
+        new Driver { Id = 1, PassportNumber = "2345 678901", FullName = "Mike Tyson", Experience = 8, License = DrivingLicense.B },
+        new Driver { Id = 2, PassportNumber = "3456 789012", FullName = "Conor McGregor", Experience = 3, License = DrivingLicense.A },
+        new Driver { Id = 3, PassportNumber = "4567 890123", FullName = "Anderson Silva", Experience = 15, License = DrivingLicense.CE },
+        new Driver { Id = 4, PassportNumber = "5678 901234", FullName = "Georges St-Pierre", Experience = 10, License = DrivingLicense.D },
+        new Driver { Id = 5, PassportNumber = "6789 012345", FullName = "Jon Jones", Experience = 7, License = DrivingLicense.BE },
+        new Driver { Id = 6, PassportNumber = "7890 123456", FullName = "Daniel Cormier", Experience = 20, License = DrivingLicense.C1 },
+        new Driver { Id = 7, PassportNumber = "8901 234567", FullName = "Stipe Miocic", Experience = 6, License = DrivingLicense.A1 },
+        new Driver { Id = 8, PassportNumber = "9012 345678", FullName = "Israel Adesanya", Experience = 4, License = DrivingLicense.M },
+        new Driver { Id = 9, PassportNumber = "1111 345678", FullName = "Aaaaaa Uuuuuuuu", Experience = 1, License = DrivingLicense.M }
+    ];
 
-    public static List<Vehicle> GetVehicles(List<VehicleModel> models) => new()
-    {
+    /// <summary>
+    /// Создаёт список транспортных средств
+    /// </summary>
+    /// <param name="models">Список моделей для привязки</param>
+    /// <returns>Список транспортных средств</returns>
+    private static List<Vehicle> GetVehicles(List<VehicleModel> models) =>
+    [
         new Vehicle { Id = 0, LicensePlate = "X005XX05", LoadCapacity = 20.0, ModelId = 0, Model = models[0] },
         new Vehicle { Id = 1, LicensePlate = "E001MP777", LoadCapacity = 15.0, ModelId = 1, Model = models[1] },
         new Vehicle { Id = 2, LicensePlate = "A123BC77", LoadCapacity = 25.5, ModelId = 2, Model = models[2] },
@@ -61,10 +116,17 @@ public static class DataSeeder
         new Vehicle { Id = 7, LicensePlate = "F678LM77", LoadCapacity = 28.0, ModelId = 1, Model = models[1] },
         new Vehicle { Id = 8, LicensePlate = "G901NO88", LoadCapacity = 16.0, ModelId = 8, Model = models[8] },
         new Vehicle { Id = 9, LicensePlate = "H234PQ00", LoadCapacity = 35.0, ModelId = 9, Model = models[9] }
-    };
+    ];
 
-    public static List<Trip> GetTrips(List<Vehicle> vehicles, List<Driver> drivers, List<Client> clients) => new()
-    {
+    /// <summary>
+    /// Создаёт список рейсов
+    /// </summary>
+    /// <param name="vehicles">Список транспортных средств</param>
+    /// <param name="drivers">Список водителей</param>
+    /// <param name="clients">Список клиентов</param>
+    /// <returns>Список рейсов</returns>
+    private static List<Trip> GetTrips(List<Vehicle> vehicles, List<Driver> drivers, List<Client> clients) =>
+    [
         new Trip { Id = 0, DriverId = 0, VehicleId = 0, ClientId = 0, Driver = drivers[0], Vehicle = vehicles[0], Client = clients[0], Date = DateTime.Now.AddDays(-20), CargoWeight = 15.0, TransportationCost = 15000m, Status = TripStatus.InTransit },
         new Trip { Id = 1, DriverId = 1, VehicleId = 1, ClientId = 1, Driver = drivers[1], Vehicle = vehicles[1], Client = clients[1], Date = DateTime.Now.AddDays(-15), CargoWeight = 12.5, TransportationCost = 12000m, Status = TripStatus.Completed },
         new Trip { Id = 2, DriverId = 1, VehicleId = 1, ClientId = 2, Driver = drivers[1], Vehicle = vehicles[1], Client = clients[2], Date = DateTime.Now.AddDays(-10), CargoWeight = 20.0, TransportationCost = 18000m, Status = TripStatus.Planned },
@@ -75,5 +137,5 @@ public static class DataSeeder
         new Trip { Id = 7, DriverId = 3, VehicleId = 6, ClientId = 7, Driver = drivers[3], Vehicle = vehicles[6], Client = clients[7], Date = DateTime.Now.AddDays(-8), CargoWeight = 22.0, TransportationCost = 20000m, Status = TripStatus.Completed },
         new Trip { Id = 8, DriverId = 4, VehicleId = 6, ClientId = 8, Driver = drivers[4], Vehicle = vehicles[6], Client = clients[8], Date = DateTime.Now.AddDays(-1), CargoWeight = 14.0, TransportationCost = 13500m, Status = TripStatus.InTransit },
         new Trip { Id = 9, DriverId = 5, VehicleId = 9, ClientId = 9, Driver = drivers[5], Vehicle = vehicles[9], Client = clients[9], Date = DateTime.Now.AddDays(-2), CargoWeight = 13.0, TransportationCost = 12500m, Status = TripStatus.InTransit }
-    };
+    ];
 }

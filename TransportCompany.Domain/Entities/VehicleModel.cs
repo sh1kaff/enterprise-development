@@ -2,25 +2,23 @@ using TransportCompany.Domain.Enums;
 
 namespace TransportCompany.Domain.Entities;
 
+/// <summary>
+/// Модель транспортного средства
+/// </summary>
 public class VehicleModel
-{ 
-    public int Id { get; set; }
-    public BodyType BodyType { get; set; }
-    public double BodyVolume { get; set; } // м^3
+{
+    /// <summary>
+    /// Идентификатор
+    /// </summary>
+    public required int Id { get; set; }
+
+    /// <summary>
+    /// Тип кузова
+    /// </summary>
+    public required BodyType BodyType { get; set; }
+
+    /// <summary>
+    /// Объём кузова в м³
+    /// </summary>
+    public double? BodyVolume { get; set; }
 }
-
-/*
-    Шорткат:
-    public string Name { get; set; } эквивалентен:
-
-    private string name;
-    public string Name {
-        get {
-            return this.name;
-        }
-        set {
-            this.name = value;
-        }
-    }
-    
-*/
