@@ -1,51 +1,16 @@
 using TransportCompany.Domain.Entities;
 using TransportCompany.Domain.Enums;
-using System.Buffers;
 
 namespace TransportCompany.Tests;
 
 /// <summary>
 /// Тесты запросов к данным транспортной компании
 /// </summary>
-public class QueriesTest : IClassFixture<QueriesTestFixture>
+/// <param name="fixture">Тестовый набор данных</param>
+public class QueriesTest(QueriesTestFixture fixture) : IClassFixture<QueriesTestFixture>
 {
-    /// <summary>
-    /// Список моделей транспортных средств
-    /// </summary>
-    private readonly List<VehicleModel> _models;
-
-    /// <summary>
-    /// Список клиентов
-    /// </summary>
-    private readonly List<Client> _clients;
-
-    /// <summary>
-    /// Список водителей
-    /// </summary>
-    private readonly List<Driver> _drivers;
-
-    /// <summary>
-    /// Список транспортных средств
-    /// </summary>
-    private readonly List<Vehicle> _vehicles;
-
-    /// <summary>
-    /// Список рейсов
-    /// </summary>
-    private readonly List<Trip> _trips;
-
-    /// <summary>
-    /// Инициализирует тестовые данные из фикстуры
-    /// </summary>
-    /// <param name="fixture">Тестовый набор данных</param>
-    public QueriesTest(QueriesTestFixture fixture)
-    {
-        _models = fixture.Models;
-        _clients = fixture.Clients;
-        _drivers = fixture.Drivers;
-        _vehicles = fixture.Vehicles;
-        _trips = fixture.Trips;
-    }
+    private readonly List<Vehicle> _vehicles = fixture.Vehicles;
+    private readonly List<Trip> _trips = fixture.Trips;
 
     /// <summary>
     /// Проверяет получение клиентов по модели транспортного средства с сортировкой по имени
