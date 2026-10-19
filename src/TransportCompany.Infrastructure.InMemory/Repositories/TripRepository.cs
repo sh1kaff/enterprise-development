@@ -27,19 +27,24 @@ public class TripRepository : ITripRepository
     public Task<Trip> AddAsync(Trip entity, CancellationToken cancellationToken = default)
     {
         entity.Id = _context.Trips.Count == 0 ? 0 : _context.Trips.Max(c => c.Id) + 1;
-        
+
         _context.Trips.Add(entity);
         return Task.FromResult(entity);
     }
 
-    // todo
+
     public Task UpdateAsync(Trip entity, CancellationToken cancellationToken = default)
     {
         var existing = _context.Trips.FirstOrDefault(c => c.Id == entity.Id);
         if (existing != null)
         {
-            existing.Name = entity.Name;
-            existing.Phone = entity.Phone;
+            existing.DriverId = entity.DriverId;
+            existing.VehicleId = entity.VehicleId;
+            existing.ClientId = entity.ClientId;
+            existing.Date = entity.Date;
+            existing.CargoWeight = entity.CargoWeight;
+            existing.TransportationCost = entity.TransportationCost;
+            existing.Status = entity.Status;
         }
         return Task.CompletedTask;
     }

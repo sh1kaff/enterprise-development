@@ -8,7 +8,6 @@ public class ClientRepository : IClientRepository
 {
     private readonly InMemoryDbContext _context;
 
-    // Внедряем нашу БД через конструктор
     public ClientRepository(InMemoryDbContext context)
     {
         _context = context;

@@ -15,7 +15,7 @@ public class InMemoryDbContext
     public List<Trip> Trips { get; set; }
 
     /// <summary>
-    /// Инициализируем БД стартовыми данными из Domain
+    /// Инициализируем БД  стартовыми данными из Domain
     /// </summary>
     public InMemoryDbContext()
     {

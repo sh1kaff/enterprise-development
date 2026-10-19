@@ -27,19 +27,19 @@ public class VehicleModelRepository : IVehicleModelRepository
     public Task<VehicleModel> AddAsync(VehicleModel entity, CancellationToken cancellationToken = default)
     {
         entity.Id = _context.Models.Count == 0 ? 0 : _context.Models.Max(c => c.Id) + 1;
-        
+
         _context.Models.Add(entity);
         return Task.FromResult(entity);
     }
 
-    // todo
+
     public Task UpdateAsync(VehicleModel entity, CancellationToken cancellationToken = default)
     {
         var existing = _context.Models.FirstOrDefault(c => c.Id == entity.Id);
         if (existing != null)
         {
-            existing.Name = entity.Name;
-            existing.Phone = entity.Phone;
+            existing.BodyType = entity.BodyType;
+            existing.BodyVolume = entity.BodyVolume;
         }
         return Task.CompletedTask;
     }

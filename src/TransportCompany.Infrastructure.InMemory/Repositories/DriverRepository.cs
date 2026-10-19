@@ -38,8 +38,10 @@ public class DriverRepository : IDriverRepository
         var existing = _context.Drivers.FirstOrDefault(c => c.Id == entity.Id);
         if (existing != null)
         {
-            existing.Name = entity.Name;
-            existing.Phone = entity.Phone;
+            existing.PassportNumber = entity.PassportNumber;
+            existing.FullName = entity.FullName;
+            existing.Experience = entity.Experience;
+            existing.License = entity.License;
         }
         return Task.CompletedTask;
     }
