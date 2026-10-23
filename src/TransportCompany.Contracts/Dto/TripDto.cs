@@ -8,8 +8,8 @@ public class TripDto
     public required int DriverId { get; init; }
     public required int VehicleId { get; init; }
     public required int ClientId { get; init; }
-    public required DateTime Date { get; init; }
-    public required double CargoWeight { get; init; }
-    public required decimal TransportationCost { get; init; }
-    public required TripStatus Status { get; init; }
+    public DateTime? Date { get; init; }
+    public double? CargoWeight { get; init; }
+    public decimal? TransportationCost { get; init; }
+    public TripStatus? Status { get; init; }
 }
