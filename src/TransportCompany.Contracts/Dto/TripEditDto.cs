@@ -16,7 +16,7 @@ public class TripEditDto
     public required double CargoWeight { get; init; }
 
     [Range(0, 10000000, ErrorMessage = "Некорректная стоимость")]
-    public required decimal TransportationCost { get; init; }
+    public decimal? TransportationCost { get; init; }
 
     public required TripStatus Status { get; init; }
 }

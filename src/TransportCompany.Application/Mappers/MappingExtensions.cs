@@ -15,7 +15,7 @@ public static class MappingExtensions
 
     public static Client ToEntity(this ClientEditDto dto) => new()
     {
-        Id = 0, // Установится в репозитории
+        Id = 0,
         Name = dto.Name,
         Phone = dto.Phone
     };
