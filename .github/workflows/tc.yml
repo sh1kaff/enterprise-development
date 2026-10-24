@@ -1,0 +1,35 @@
+name: TransportCompany CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+          dotnet-quality: ga
+
+      - name: Restore dependencies
+        run: dotnet restore Enterprise.slnx
+
+      - name: Build solution
+        run: dotnet build Enterprise.slnx --configuration Release --no-restore
+
+      - name: Run tests
+        run: dotnet test Enterprise.slnx --configuration Release --no-build --logger trx
