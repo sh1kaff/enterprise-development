@@ -4,7 +4,9 @@
 TODO
 
 ### Запуск
-TODO
+```bash
+dotnet run --project src/TransportCompany.AppHost/TransportCompany.AppHost.csproj
+```
 
 ### Результаты
 TODO
