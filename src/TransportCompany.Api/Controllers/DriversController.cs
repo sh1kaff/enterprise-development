@@ -4,19 +4,19 @@ using TransportCompany.Contracts.Interfaces;
 
 namespace TransportCompany.Api.Controllers;
 
+/// <summary>
+/// Контроллер для управления водителями транспортной компании
+/// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class DriversController : ControllerBase
+public class DriversController(IDriverService service, ILogger<DriversController> logger) : ControllerBase
 {
-    private readonly IDriverService _service;
-    private readonly ILogger<DriversController> _logger;
+    private readonly IDriverService _service = service;
+    private readonly ILogger<DriversController> _logger = logger;
 
-    public DriversController(IDriverService service, ILogger<DriversController> logger)
-    {
-        _service = service;
-        _logger = logger;
-    }
-
+    /// <summary>
+    /// Получить список всех водителей
+    /// </summary>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<DriverDto>), 200)]
     [ProducesResponseType(500)]
@@ -34,6 +34,9 @@ public class DriversController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Получить водителя по идентификатору
+    /// </summary>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(DriverDto), 200)]
     [ProducesResponseType(404)]
@@ -53,6 +56,9 @@ public class DriversController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Создать нового водителя
+    /// </summary>
     [HttpPost]
     [ProducesResponseType(typeof(DriverDto), 201)]
     [ProducesResponseType(400)]
@@ -71,6 +77,9 @@ public class DriversController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Обновить данные водителя
+    /// </summary>
     [HttpPut("{id:int}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
@@ -89,6 +98,9 @@ public class DriversController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Удалить водителя
+    /// </summary>
     [HttpDelete("{id:int}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(500)]

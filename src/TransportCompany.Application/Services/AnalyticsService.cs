@@ -6,25 +6,26 @@ using TransportCompany.Domain.Interfaces;
 
 namespace TransportCompany.Application.Services;
 
-public class AnalyticsService : IAnalyticsService
-{
-    private readonly ITripRepository _tripRepository;
-    private readonly IVehicleRepository _vehicleRepository;
-    private readonly IClientRepository _clientRepository;
-    private readonly IDriverRepository _driverRepository;
-
-    public AnalyticsService(
+/// <summary>
+/// Сервис аналитики транспортной компании
+/// </summary>
+public class AnalyticsService(
         ITripRepository tripRepository,
         IVehicleRepository vehicleRepository,
         IClientRepository clientRepository,
-        IDriverRepository driverRepository)
-    {
-        _tripRepository = tripRepository;
-        _vehicleRepository = vehicleRepository;
-        _clientRepository = clientRepository;
-        _driverRepository = driverRepository;
-    }
+        IDriverRepository driverRepository) : IAnalyticsService
+{
+    private readonly ITripRepository _tripRepository = tripRepository;
+    private readonly IVehicleRepository _vehicleRepository = vehicleRepository;
+    private readonly IClientRepository _clientRepository = clientRepository;
+    private readonly IDriverRepository _driverRepository = driverRepository;
 
+    /// <summary>
+    /// Получить клиентов, перевозивших грузы на ТС указанной модели
+    /// </summary>
+    /// <param name="modelId">Идентификатор модели ТС</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Клиенты, отсортированные по имени</returns>
     public async Task<IEnumerable<ClientDto>> GetClientsByVehicleModelAsync(int modelId, CancellationToken cancellationToken = default)
     {
         var trips = await _tripRepository.GetAllAsync(cancellationToken);
@@ -44,6 +45,11 @@ public class AnalyticsService : IAnalyticsService
             .Select(c => c.ToDto());
     }
 
+    /// <summary>
+    /// Получить транспортные средства, находящиеся в рейсе
+    /// </summary>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Транспортные средства в пути</returns>
     public async Task<IEnumerable<VehicleDto>> GetVehiclesInTransitAsync(CancellationToken cancellationToken = default)
     {
         var trips = await _tripRepository.GetAllAsync(cancellationToken);
@@ -59,6 +65,11 @@ public class AnalyticsService : IAnalyticsService
             .Select(v => v.ToDto());
     }
 
+    /// <summary>
+    /// Получить топ-5 водителей по количеству рейсов
+    /// </summary>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Топ-5 водителей</returns>
     public async Task<IEnumerable<TopDriverDto>> GetTop5DriversAsync(CancellationToken cancellationToken = default)
     {
         var trips = await _tripRepository.GetAllAsync(cancellationToken);
@@ -88,6 +99,11 @@ public class AnalyticsService : IAnalyticsService
         return result;
     }
 
+    /// <summary>
+    /// Получить количество рейсов для каждого транспортного средства
+    /// </summary>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Количество рейсов по транспортным средствам</returns>
     public async Task<IEnumerable<VehicleTripCountDto>> GetTripCountForVehiclesAsync(CancellationToken cancellationToken = default)
     {
         var trips = await _tripRepository.GetAllAsync(cancellationToken);
@@ -100,6 +116,11 @@ public class AnalyticsService : IAnalyticsService
         });
     }
 
+    /// <summary>
+    /// Получить топ-5 клиентов по суммарной стоимости перевозок
+    /// </summary>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Топ-5 клиентов</returns>
     public async Task<IEnumerable<TopClientDto>> GetTop5ClientsByCostAsync(CancellationToken cancellationToken = default)
     {
         var trips = await _tripRepository.GetAllAsync(cancellationToken);

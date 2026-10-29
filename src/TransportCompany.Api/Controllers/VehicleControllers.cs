@@ -4,19 +4,19 @@ using TransportCompany.Contracts.Interfaces;
 
 namespace TransportCompany.Api.Controllers;
 
+/// <summary>
+/// Контроллер для управления транспортными средствами
+/// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class VehiclesController : ControllerBase
+public class VehiclesController(IVehicleService service, ILogger<VehiclesController> logger) : ControllerBase
 {
-    private readonly IVehicleService _service;
-    private readonly ILogger<VehiclesController> _logger;
+    private readonly IVehicleService _service = service;
+    private readonly ILogger<VehiclesController> _logger = logger;
 
-    public VehiclesController(IVehicleService service, ILogger<VehiclesController> logger)
-    {
-        _service = service;
-        _logger = logger;
-    }
-
+    /// <summary>
+    /// Получить список всех транспортных средств
+    /// </summary>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<VehicleDto>), 200)]
     [ProducesResponseType(500)]
@@ -34,6 +34,9 @@ public class VehiclesController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Получить транспортное средство по идентификатору
+    /// </summary>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(VehicleDto), 200)]
     [ProducesResponseType(404)]
@@ -53,6 +56,9 @@ public class VehiclesController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Создать новое транспортное средство
+    /// </summary>
     [HttpPost]
     [ProducesResponseType(typeof(VehicleDto), 201)]
     [ProducesResponseType(400)]
@@ -71,6 +77,9 @@ public class VehiclesController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Обновить данные транспортного средства
+    /// </summary>
     [HttpPut("{id:int}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
@@ -89,6 +98,9 @@ public class VehiclesController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Удалить транспортное средство
+    /// </summary>
     [HttpDelete("{id:int}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(500)]

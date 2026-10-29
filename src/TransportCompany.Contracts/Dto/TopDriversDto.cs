@@ -1,9 +1,22 @@
 namespace TransportCompany.Contracts.Dto;
 
+/// <summary>
+/// DTO водителя из топа по количеству рейсов
+/// </summary>
 public class TopDriverDto
 {
-    // мб еще что то добавить потом но пока так
+    /// <summary>
+    /// Идентификатор водителя
+    /// </summary>
     public required int DriverId { get; init; }
+
+    /// <summary>
+    /// ФИО водителя
+    /// </summary>
     public required string DriverName { get; init; }
+
+    /// <summary>
+    /// Количество рейсов
+    /// </summary>
     public required int TripCount { get; init; }
 }

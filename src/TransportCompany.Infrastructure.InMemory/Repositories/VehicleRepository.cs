@@ -4,14 +4,9 @@ using TransportCompany.Infrastructure.InMemory.Data;
 
 namespace TransportCompany.Infrastructure.InMemory.Repositories;
 
-public class VehicleRepository : IVehicleRepository
+public class VehicleRepository(InMemoryDbContext context) : IVehicleRepository
 {
-    private readonly InMemoryDbContext _context;
-
-    public VehicleRepository(InMemoryDbContext context)
-    {
-        _context = context;
-    }
+    private readonly InMemoryDbContext _context = context;
 
     public Task<IEnumerable<Vehicle>> GetAllAsync(CancellationToken cancellationToken = default)
     {

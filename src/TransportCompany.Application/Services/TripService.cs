@@ -5,27 +5,42 @@ using TransportCompany.Domain.Interfaces;
 
 namespace TransportCompany.Application.Services;
 
-public class TripService : ITripService
+/// <summary>
+/// Сервис для работы с рейсами транспортной компании
+/// </summary>
+public class TripService(ITripRepository repository) : ITripService
 {
-    private readonly ITripRepository _repository;
+    private readonly ITripRepository _repository = repository;
 
-    public TripService(ITripRepository repository)
-    {
-        _repository = repository;
-    }
-
+    /// <summary>
+    /// Получить список всех рейсов
+    /// </summary>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Список рейсов</returns>
     public async Task<IEnumerable<TripDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var entities = await _repository.GetAllAsync(cancellationToken);
         return entities.Select(e => e.ToDto());
     }
 
+    /// <summary>
+    /// Получить рейс по идентификатору
+    /// </summary>
+    /// <param name="id">Идентификатор рейса</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Рейс или null, если не найден</returns>
     public async Task<TripDto?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         var entity = await _repository.GetByIdAsync(id, cancellationToken);
         return entity?.ToDto();
     }
 
+    /// <summary>
+    /// Создать новый рейс
+    /// </summary>
+    /// <param name="dto">Данные рейса</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Созданный рейс</returns>
     public async Task<TripDto> CreateAsync(TripEditDto dto, CancellationToken cancellationToken = default)
     {
         var entity = dto.ToEntity();
@@ -33,6 +48,12 @@ public class TripService : ITripService
         return createdEntity.ToDto();
     }
 
+    /// <summary>
+    /// Обновить данные рейса
+    /// </summary>
+    /// <param name="id">Идентификатор рейса</param>
+    /// <param name="dto">Новые данные рейса</param>
+    /// <param name="cancellationToken">Токен отмены</param>
     public async Task UpdateAsync(int id, TripEditDto dto, CancellationToken cancellationToken = default)
     {
         var entity = dto.ToEntity();
@@ -40,6 +61,11 @@ public class TripService : ITripService
         await _repository.UpdateAsync(entity, cancellationToken);
     }
 
+    /// <summary>
+    /// Удалить рейс
+    /// </summary>
+    /// <param name="id">Идентификатор рейса</param>
+    /// <param name="cancellationToken">Токен отмены</param>
     public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
     {
         await _repository.DeleteAsync(id, cancellationToken);

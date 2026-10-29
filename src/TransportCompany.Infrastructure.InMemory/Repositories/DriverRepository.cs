@@ -4,14 +4,9 @@ using TransportCompany.Infrastructure.InMemory.Data;
 
 namespace TransportCompany.Infrastructure.InMemory.Repositories;
 
-public class DriverRepository : IDriverRepository
+public class DriverRepository(InMemoryDbContext context) : IDriverRepository
 {
-    private readonly InMemoryDbContext _context;
-
-    public DriverRepository(InMemoryDbContext context)
-    {
-        _context = context;
-    }
+    private readonly InMemoryDbContext _context = context;
 
     public Task<IEnumerable<Driver>> GetAllAsync(CancellationToken cancellationToken = default)
     {
@@ -27,7 +22,7 @@ public class DriverRepository : IDriverRepository
     public Task<Driver> AddAsync(Driver entity, CancellationToken cancellationToken = default)
     {
         entity.Id = _context.Drivers.Count == 0 ? 0 : _context.Drivers.Max(c => c.Id) + 1;
-        
+
         _context.Drivers.Add(entity);
         return Task.FromResult(entity);
     }

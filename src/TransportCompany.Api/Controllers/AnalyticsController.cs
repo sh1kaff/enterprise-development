@@ -9,19 +9,13 @@ namespace TransportCompany.Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class AnalyticsController : ControllerBase
+public class AnalyticsController(IAnalyticsService analyticsService, ILogger<AnalyticsController> logger) : ControllerBase
 {
-    private readonly IAnalyticsService _analyticsService;
-    private readonly ILogger<AnalyticsController> _logger;
-
-    public AnalyticsController(IAnalyticsService analyticsService, ILogger<AnalyticsController> logger)
-    {
-        _analyticsService = analyticsService;
-        _logger = logger;
-    }
+    private readonly IAnalyticsService _analyticsService = analyticsService;
+    private readonly ILogger<AnalyticsController> _logger = logger;
 
     /// <summary>
-    /// 1. Вывести информацию обо всех клиентах, заказывавших перевозку на транспорте указанной модели
+    /// Вывести информацию обо всех клиентах, заказывавших перевозку на транспорте указанной модели
     /// </summary>
     [HttpGet("clients-by-model/{modelId:int}")]
     [ProducesResponseType(typeof(IEnumerable<ClientDto>), 200)]
@@ -41,7 +35,7 @@ public class AnalyticsController : ControllerBase
     }
 
     /// <summary>
-    /// 2. Вывести информацию о транспортных средствах, находящихся в рейсе
+    /// Вывести информацию о транспортных средствах, находящихся в рейсе
     /// </summary>
     [HttpGet("vehicles-in-transit")]
     [ProducesResponseType(typeof(IEnumerable<VehicleDto>), 200)]
@@ -61,7 +55,7 @@ public class AnalyticsController : ControllerBase
     }
 
     /// <summary>
-    /// 3. Вывести топ 5 водителей по количеству рейсов
+    /// Вывести топ 5 водителей по количеству рейсов
     /// </summary>
     [HttpGet("top-drivers")]
     [ProducesResponseType(typeof(IEnumerable<TopDriverDto>), 200)]
@@ -81,7 +75,7 @@ public class AnalyticsController : ControllerBase
     }
 
     /// <summary>
-    /// 4. Для каждого транспортного средства вывести число рейсов
+    /// Для каждого транспортного средства вывести число рейсов
     /// </summary>
     [HttpGet("vehicle-trip-counts")]
     [ProducesResponseType(typeof(IEnumerable<VehicleTripCountDto>), 200)]
@@ -101,7 +95,7 @@ public class AnalyticsController : ControllerBase
     }
 
     /// <summary>
-    /// 5. Вывести топ 5 клиентов по сумме затрат на перевозки
+    /// Вывести топ 5 клиентов по сумме затрат на перевозки
     /// </summary>
     [HttpGet("top-clients-by-cost")]
     [ProducesResponseType(typeof(IEnumerable<TopClientDto>), 200)]

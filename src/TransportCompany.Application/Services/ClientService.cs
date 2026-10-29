@@ -5,27 +5,42 @@ using TransportCompany.Domain.Interfaces;
 
 namespace TransportCompany.Application.Services;
 
-public class ClientService : IClientService
+/// <summary>
+/// Сервис для работы с клиентами транспортной компании
+/// </summary>
+public class ClientService(IClientRepository repository) : IClientService
 {
-    private readonly IClientRepository _repository;
+    private readonly IClientRepository _repository = repository;
 
-    public ClientService(IClientRepository repository)
-    {
-        _repository = repository;
-    }
-
+    /// <summary>
+    /// Получить список всех клиентов
+    /// </summary>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Список клиентов</returns>
     public async Task<IEnumerable<ClientDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var clients = await _repository.GetAllAsync(cancellationToken);
         return clients.Select(c => c.ToDto());
     }
 
+    /// <summary>
+    /// Получить клиента по идентификатору
+    /// </summary>
+    /// <param name="id">Идентификатор клиента</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Клиент или null, если не найден</returns>
     public async Task<ClientDto?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         var client = await _repository.GetByIdAsync(id, cancellationToken);
         return client?.ToDto();
     }
 
+    /// <summary>
+    /// Создать нового клиента
+    /// </summary>
+    /// <param name="dto">Данные клиента</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Созданный клиент</returns>
     public async Task<ClientDto> CreateAsync(ClientEditDto dto, CancellationToken cancellationToken = default)
     {
         var entity = dto.ToEntity();
@@ -33,6 +48,12 @@ public class ClientService : IClientService
         return createdEntity.ToDto();
     }
 
+    /// <summary>
+    /// Обновить данные клиента
+    /// </summary>
+    /// <param name="id">Идентификатор клиента</param>
+    /// <param name="dto">Новые данные клиента</param>
+    /// <param name="cancellationToken">Токен отмены</param>
     public async Task UpdateAsync(int id, ClientEditDto dto, CancellationToken cancellationToken = default)
     {
         var entity = dto.ToEntity();
@@ -40,6 +61,11 @@ public class ClientService : IClientService
         await _repository.UpdateAsync(entity, cancellationToken);
     }
 
+    /// <summary>
+    /// Удалить клиента
+    /// </summary>
+    /// <param name="id">Идентификатор клиента</param>
+    /// <param name="cancellationToken">Токен отмены</param>
     public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
     {
         await _repository.DeleteAsync(id, cancellationToken);

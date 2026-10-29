@@ -4,14 +4,9 @@ using TransportCompany.Infrastructure.InMemory.Data;
 
 namespace TransportCompany.Infrastructure.InMemory.Repositories;
 
-public class ClientRepository : IClientRepository
+public class ClientRepository(InMemoryDbContext context) : IClientRepository
 {
-    private readonly InMemoryDbContext _context;
-
-    public ClientRepository(InMemoryDbContext context)
-    {
-        _context = context;
-    }
+    private readonly InMemoryDbContext _context = context;
 
     public Task<IEnumerable<Client>> GetAllAsync(CancellationToken cancellationToken = default)
     {
@@ -27,7 +22,7 @@ public class ClientRepository : IClientRepository
     public Task<Client> AddAsync(Client entity, CancellationToken cancellationToken = default)
     {
         entity.Id = _context.Clients.Count == 0 ? 0 : _context.Clients.Max(c => c.Id) + 1;
-        
+
         _context.Clients.Add(entity);
         return Task.FromResult(entity);
     }

@@ -16,7 +16,7 @@ public class AnalyticsQueriesTests(QueriesTestFixture data) : IClassFixture<Quer
     public void ClientsByVehicleModelAreSortedByName()
     {
         var targetModelId = 1;
-        int[] expectedIds = [1, 4, 6]; 
+        int[] expectedIds = [1, 4, 6];
 
         // Act
         var targetVehicleIds = data.Vehicles
@@ -31,7 +31,7 @@ public class AnalyticsQueriesTests(QueriesTestFixture data) : IClassFixture<Quer
             .OrderBy(c => c.Name, StringComparer.Ordinal)
             .ToList();
 
-        Assert.NotEmpty(clients);    
+        Assert.NotEmpty(clients);
     }
 
     /// <summary>
@@ -48,7 +48,7 @@ public class AnalyticsQueriesTests(QueriesTestFixture data) : IClassFixture<Quer
             .ToList();
 
         Assert.NotEmpty(vehiclesInTransit);
-        Assert.All(vehiclesInTransit, v => 
+        Assert.All(vehiclesInTransit, v =>
             Assert.Contains(data.Trips, t => t.VehicleId == v.Id && t.Status == TripStatus.InTransit));
     }
 
@@ -80,10 +80,10 @@ public class AnalyticsQueriesTests(QueriesTestFixture data) : IClassFixture<Quer
     public void TripCountForEachVehicleIsCalculatedCorrectly()
     {
         var vehicleTripCounts = data.Vehicles
-            .Select(v => new 
-            { 
-                VehicleId = v.Id, 
-                TripCount = data.Trips.Count(t => t.VehicleId == v.Id) 
+            .Select(v => new
+            {
+                VehicleId = v.Id,
+                TripCount = data.Trips.Count(t => t.VehicleId == v.Id)
             })
             .ToList();
 
@@ -98,10 +98,10 @@ public class AnalyticsQueriesTests(QueriesTestFixture data) : IClassFixture<Quer
     {
         var topClients = data.Trips
             .GroupBy(t => t.ClientId)
-            .Select(group => new 
-            { 
-                ClientId = group.Key, 
-                TotalSpent = group.Sum(t => t.TransportationCost) 
+            .Select(group => new
+            {
+                ClientId = group.Key,
+                TotalSpent = group.Sum(t => t.TransportationCost)
             })
             .OrderByDescending(c => c.TotalSpent)
             .ThenBy(c => c.ClientId)

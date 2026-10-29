@@ -9,16 +9,10 @@ namespace TransportCompany.Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class ClientsController : ControllerBase
+public class ClientsController(IClientService clientService, ILogger<ClientsController> logger) : ControllerBase
 {
-    private readonly IClientService _clientService;
-    private readonly ILogger<ClientsController> _logger;
-
-    public ClientsController(IClientService clientService, ILogger<ClientsController> logger)
-    {
-        _clientService = clientService;
-        _logger = logger;
-    }
+    private readonly IClientService _clientService = clientService;
+    private readonly ILogger<ClientsController> _logger = logger;
 
     /// <summary>
     /// Получить список всех клиентов

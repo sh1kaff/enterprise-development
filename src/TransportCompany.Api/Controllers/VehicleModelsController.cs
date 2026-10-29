@@ -4,19 +4,19 @@ using TransportCompany.Contracts.Interfaces;
 
 namespace TransportCompany.Api.Controllers;
 
+/// <summary>
+/// Контроллер для управления моделями транспортных средств
+/// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class VehicleModelsController : ControllerBase
+public class VehicleModelsController(IVehicleModelService service, ILogger<VehicleModelsController> logger) : ControllerBase
 {
-    private readonly IVehicleModelService _service;
-    private readonly ILogger<VehicleModelsController> _logger;
+    private readonly IVehicleModelService _service = service;
+    private readonly ILogger<VehicleModelsController> _logger = logger;
 
-    public VehicleModelsController(IVehicleModelService service, ILogger<VehicleModelsController> logger)
-    {
-        _service = service;
-        _logger = logger;
-    }
-
+    /// <summary>
+    /// Получить список всех моделей транспортных средств
+    /// </summary>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<VehicleModelDto>), 200)]
     [ProducesResponseType(500)]
@@ -34,6 +34,9 @@ public class VehicleModelsController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Получить модель транспортного средства по идентификатору
+    /// </summary>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(VehicleModelDto), 200)]
     [ProducesResponseType(404)]
@@ -53,6 +56,9 @@ public class VehicleModelsController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Создать новую модель транспортного средства
+    /// </summary>
     [HttpPost]
     [ProducesResponseType(typeof(VehicleModelDto), 201)]
     [ProducesResponseType(400)]
@@ -71,6 +77,9 @@ public class VehicleModelsController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Обновить данные модели транспортного средства
+    /// </summary>
     [HttpPut("{id:int}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
@@ -89,6 +98,9 @@ public class VehicleModelsController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Удалить модель транспортного средства
+    /// </summary>
     [HttpDelete("{id:int}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(500)]

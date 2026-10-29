@@ -4,14 +4,9 @@ using TransportCompany.Infrastructure.InMemory.Data;
 
 namespace TransportCompany.Infrastructure.InMemory.Repositories;
 
-public class TripRepository : ITripRepository
+public class TripRepository(InMemoryDbContext context) : ITripRepository
 {
-    private readonly InMemoryDbContext _context;
-
-    public TripRepository(InMemoryDbContext context)
-    {
-        _context = context;
-    }
+    private readonly InMemoryDbContext _context = context;
 
     public Task<IEnumerable<Trip>> GetAllAsync(CancellationToken cancellationToken = default)
     {
