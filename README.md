@@ -17,10 +17,10 @@ dotnet test
 Запуск Aspire
 ![Запуск Aspire](assets/cli-aspire-start.png)
 Панель Aspire
-![Панель Aspire](aspire-panel.png)
+![Панель Aspire](assets/aspire-panel.png)
 Панель Swagger
-![Панель Swagger](swagger-panel.png)
+![Панель Swagger](assets/swagger-panel.png)
 Пример работы одной ручки
-![Пример работы одной ручки](handler-response-example.png)
+![Пример работы одной ручки](assets/handler-response-example.png)
 Прохождение тестов
-![Прохождение тестов](test-passing.png)
+![Прохождение тестов](assets/test-passing.png)
