@@ -27,7 +27,6 @@ public class DriverRepository(InMemoryDbContext context) : IDriverRepository
         return Task.FromResult(entity);
     }
 
-    // todo
     public Task UpdateAsync(Driver entity, CancellationToken cancellationToken = default)
     {
         var existing = _context.Drivers.FirstOrDefault(c => c.Id == entity.Id);
