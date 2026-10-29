@@ -32,4 +32,4 @@ jobs:
         run: dotnet build Enterprise.slnx --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test Enterprise.slnx --configuration Release --no-build --logger trx
+        run: dotnet test Enterprise.slnx --configuration Release --no-build
