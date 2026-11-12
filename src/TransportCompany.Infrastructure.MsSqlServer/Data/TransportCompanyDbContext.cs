@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TransportCompany.Domain.Entities;
+using TransportCompany.Domain.Seeds;
 
 namespace TransportCompany.Infrastructure.MsSqlServer.Data;
 
@@ -71,5 +72,40 @@ public class TransportCompanyDbContext(DbContextOptions<TransportCompanyDbContex
                 .HasForeignKey(t => t.ClientId)
                 .OnDelete(DeleteBehavior.Restrict);
         });
+        SeedData(modelBuilder);
+    }
+    private static void SeedData(ModelBuilder modelBuilder)
+    {
+        var models = TestData.GetVehicleModels();
+        var clients = TestData.GetClients();
+        var drivers = TestData.GetDrivers();
+        var vehicles = TestData.GetVehicles(models);
+        var trips = TestData.GetTrips(vehicles, drivers, clients);
+
+        modelBuilder.Entity<VehicleModel>().HasData(models);
+        modelBuilder.Entity<Client>().HasData(clients);
+        modelBuilder.Entity<Driver>().HasData(drivers);
+
+        modelBuilder.Entity<Vehicle>().HasData(vehicles.Select(v => new Vehicle
+        {
+            Id = v.Id,
+            LicensePlate = v.LicensePlate,
+            LoadCapacity = v.LoadCapacity,
+            ModelId = v.ModelId
+        }));
+
+        modelBuilder.Entity<Trip>().HasData(trips.Select(t => new Trip
+        {
+            Id = t.Id,
+            DriverId = t.DriverId,
+            VehicleId = t.VehicleId,
+            ClientId = t.ClientId,
+            Origin = t.Origin,
+            Destination = t.Destination,
+            Date = t.Date,
+            CargoWeight = t.CargoWeight,
+            TransportationCost = t.TransportationCost,
+            Status = t.Status
+        }));
     }
 }

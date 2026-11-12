@@ -18,7 +18,7 @@ public class QueriesTest(QueriesTestFixture fixture) : IClassFixture<QueriesTest
     [Fact]
     public void GetClientsByVehicleModel_OrderedByName()
     {
-        var targetModelId = 1;
+        var targetModelId = 2;
         var expectedClientNames = new[] { "Cat Dog", "David Miller" };
 
         var resultClients = _trips
@@ -40,7 +40,7 @@ public class QueriesTest(QueriesTestFixture fixture) : IClassFixture<QueriesTest
     public void GetVehiclesByTripStatus()
     {
         var tripStatus = TripStatus.InTransit;
-        var expectedVehicleIds = new HashSet<int> { 0, 4, 8, 9 };
+        var expectedVehicleIds = new HashSet<int> { 1, 5, 9, 10 };
 
         var resultVehicleIds = _trips
             .Where(t => t.Status == tripStatus)
@@ -58,7 +58,7 @@ public class QueriesTest(QueriesTestFixture fixture) : IClassFixture<QueriesTest
     {
         var expectedVehicleCount = 10;
         var vehicle6Id = 6;
-        var expectedVehicle6TripCount = 3;
+        var expectedVehicle6TripCount = 1;
         var vehicle8Id = 8;
         var expectedVehicle8TripCount = 0;
 
@@ -85,7 +85,7 @@ public class QueriesTest(QueriesTestFixture fixture) : IClassFixture<QueriesTest
     [Fact]
     public void GetTopFiveDriversByTripCount()
     {
-        var expectedTopDriverId = 3;
+        var expectedTopDriverId = 4;
         var expectedTopDriverTripCount = 3;
 
         var topDrivers = _trips
@@ -105,7 +105,7 @@ public class QueriesTest(QueriesTestFixture fixture) : IClassFixture<QueriesTest
     [Fact]
     public void GetTopFiveClientsByTransportationCost()
     {
-        var expectedTopClientId = 4;
+        var expectedTopClientId = 5;
         var expectedTopClientTotalCost = 22000m;
 
         var topClients = _trips
