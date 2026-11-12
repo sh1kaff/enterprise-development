@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="13.6.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.14">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.11" />
   </ItemGroup>
@@ -16,6 +21,7 @@
     <ProjectReference Include="..\TransportCompany.Application\TransportCompany.Application.csproj" />
     <ProjectReference Include="..\TransportCompany.Contracts\TransportCompany.Contracts.csproj" />
     <ProjectReference Include="..\TransportCompany.Infrastructure.InMemory\TransportCompany.Infrastructure.InMemory.csproj" />
+    <ProjectReference Include="..\TransportCompany.Infrastructure.MsSqlServer\TransportCompany.Infrastructure.MsSqlServer.csproj" />
   </ItemGroup>
 
 </Project>
