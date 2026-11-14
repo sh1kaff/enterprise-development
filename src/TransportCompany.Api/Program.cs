@@ -1,8 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using TransportCompany.Application.Services;
 using TransportCompany.Contracts.Interfaces;
 using TransportCompany.Domain.Interfaces;
-using TransportCompany.Infrastructure.InMemory.Data;
-using TransportCompany.Infrastructure.InMemory.Repositories;
+using TransportCompany.Infrastructure.MsSqlServer.Data;
+using TransportCompany.Infrastructure.MsSqlServer.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,7 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 
 builder.Services.AddOpenApi();
 
-builder.Services.AddSingleton<InMemoryDbContext>();
+builder.AddSqlServerDbContext<TransportCompanyDbContext>("TransportCompanyDb");
 
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IDriverRepository, DriverRepository>();
@@ -47,6 +48,10 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    using var scope = app.Services.CreateScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<TransportCompanyDbContext>();
+    await dbContext.Database.MigrateAsync();
+
     app.MapOpenApi();
     app.UseSwaggerUI(options =>
     {
