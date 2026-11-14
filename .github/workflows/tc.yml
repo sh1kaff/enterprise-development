@@ -2,7 +2,7 @@ name: TransportCompany CI
 
 on:
   push:
-    branches: [main, lab-2-new]
+    branches: [main, lab-2-new, lab3]
   pull_request:
     branches: [main]
 
