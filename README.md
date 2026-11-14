@@ -19,4 +19,4 @@ dotnet test
 
 ### Результаты
 Запуск Aspire
-![Запуск Aspire](aspire-run.png)
+![Запуск Aspire](assets/aspire-run.png)
